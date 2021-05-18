@@ -6,7 +6,6 @@ import random
 from instabot import Bot #pip install InstagramApi
 from dotenv import dotenv_values #pip install python-dotenv
 import config
-import shutil
 
 env = dotenv_values(".env")
 
@@ -20,8 +19,10 @@ reddit = praw.Reddit(client_id=env.get('PRAW_CLIENT_ID'),
 previous_memes = []
 
 # Remove previous config
-try: shutil.rmtree('./config')
-except: pass
+if config.REMOVE_CONFIG_FOLDER:
+	import shutil
+	try: shutil.rmtree('./config')
+	except: pass
 
 # Read previous meme urls
 with open(config.MEME_LOG, 'r') as filehandle:
